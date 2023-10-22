@@ -140,6 +140,9 @@ class Connect4 {
         checkDiagonalTLtoBR();
     }
   
-   
+    restart () {
+      this.createGrid();
+      this.onPlayerMove();
+    }
   }
   
