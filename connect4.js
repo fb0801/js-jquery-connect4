@@ -56,6 +56,31 @@ class Connect4 {
         $('.col').removeClass(`next-${that.player}`);
       });
   
-    
+      $board.on('click', '.col.empty', function() {
+        if (that.isGameOver) return;
+        const col = $(this).data('col');
+        const $lastEmptyCell = findLastEmptyCell(col);
+        $lastEmptyCell.removeClass(`empty next-${that.player}`);
+        $lastEmptyCell.addClass(that.player);
+        $lastEmptyCell.data('player', that.player);
+  
+        const winner = that.checkForWinner(
+          $lastEmptyCell.data('row'), 
+          $lastEmptyCell.data('col')
+        )
+        if (winner) {
+          that.isGameOver = true;
+          alert(`Game Over! Player ${that.player} has won!`);
+          $('.col.empty').removeClass('empty');
+          return;
+        }
+  
+        that.player = (that.player === 'red') ? 'black' : 'red';
+        that.onPlayerMove();
+        $(this).trigger('mouseenter');
+      });
+    }
+  
+   
   }
   
