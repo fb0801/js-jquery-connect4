@@ -29,6 +29,33 @@ class Connect4 {
       }
     }
   
- 
+    setupEventListeners() {
+        //place the counters
+      const $board = $(this.selector);
+      const that = this;
+  
+      function findLastEmptyCell(col) {
+        const cells = $(`.col[data-col='${col}']`);
+        for (let i = cells.length - 1; i >= 0; i--) {
+          const $cell = $(cells[i]);
+          if ($cell.hasClass('empty')) {
+            return $cell;
+          }
+        }
+        return null;
+      }
+  
+      $board.on('mouseenter', '.col.empty', function() {
+        if (that.isGameOver) return;
+        const col = $(this).data('col');
+        const $lastEmptyCell = findLastEmptyCell(col);
+        $lastEmptyCell.addClass(`next-${that.player}`);
+      });
+  
+      $board.on('mouseleave', '.col', function() {
+        $('.col').removeClass(`next-${that.player}`);
+      });
+  
+    
   }
   
